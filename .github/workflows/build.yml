@@ -1,4 +1,4 @@
-name: Build CounterApp
+name: Build MC-Dcode-app
 
 on: [push]
 
@@ -22,4 +22,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: CounterApp
-        path: dist/Counter_Apps.exe
+        path: dist/MC-Dcode-app.exe
