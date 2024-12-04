@@ -1,4 +1,4 @@
-name: Build MC Dcode app
+name: Build Minecraft-Decoration-Code-Editor-App
 
 on: [push]
 
@@ -21,5 +21,5 @@ jobs:
     - name: Upload executable
       uses: actions/upload-artifact@v2
       with:
-        name: MC Dcode app
-        path: dist/MC-Dcode-app.exe
+        name: Minecraft-Decoration-Code-Editor-App
+        path: dist/MC_Dcode_app.exe
