@@ -19,7 +19,7 @@ jobs:
       run: |
         pyinstaller --onefile --icon=icon.ico Counter_Apps.py
     - name: Upload executable
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: MC Dcode app
         path: dist/MC-Dcode-app.exe
