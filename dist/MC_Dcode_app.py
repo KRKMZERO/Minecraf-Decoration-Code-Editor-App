@@ -1,6 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
-import json
+from tkinter import ttk
 
 class MinecraftCodeEditor:
     def __init__(self, root):
@@ -11,9 +10,9 @@ class MinecraftCodeEditor:
         self.frame = tk.Frame(root)
         self.frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # テキストボックス
-        self.text_box = tk.Text(self.frame, wrap="word", height=20, width=50)
-        self.text_box.grid(row=0, column=0, columnspan=3, sticky="nsew", padx=5, pady=5)
+        # 上部に配置するボタンフレーム
+        self.button_frame = tk.Frame(self.frame)
+        self.button_frame.grid(row=0, column=0, columnspan=3, sticky="ew", pady=5)
 
         # カラーコードのプルダウンメニュー
         self.color_codes = [
@@ -25,13 +24,13 @@ class MinecraftCodeEditor:
         self.color_code_var = tk.StringVar(value=self.color_codes[0])  # 初期値
 
         self.color_code_menu = ttk.OptionMenu(
-            self.frame, self.color_code_var, *self.color_codes
+            self.button_frame, self.color_code_var, *self.color_codes
         )
-        self.color_code_menu.grid(row=1, column=0, padx=5, pady=5)
+        self.color_code_menu.grid(row=0, column=0, padx=5, pady=5)
 
         # 「カラーコードを追加」ボタン
-        self.add_color_button = tk.Button(self.frame, text="Add Color Code", command=self.add_color_code)
-        self.add_color_button.grid(row=1, column=1, padx=5, pady=5)
+        self.add_color_button = tk.Button(self.button_frame, text="Add Color Code", command=self.add_color_code)
+        self.add_color_button.grid(row=0, column=1, padx=5, pady=5)
 
         # フォーマットコードボタン
         format_codes = [
@@ -43,19 +42,19 @@ class MinecraftCodeEditor:
             ("§r (Reset)", "§r"),
         ]
         for idx, (label, code) in enumerate(format_codes):
-            button = tk.Button(self.frame, text=label, command=lambda c=code: self.add_format_code(c))
-            button.grid(row=2, column=idx, padx=5, pady=5)
-
-        # 構文チェックボタン
-        self.validate_button = tk.Button(self.frame, text="Validate JSON", command=self.validate_code)
-        self.validate_button.grid(row=3, column=0, padx=5, pady=5)
+            button = tk.Button(self.button_frame, text=label, command=lambda c=code: self.add_format_code(c))
+            button.grid(row=0, column=2 + idx, padx=5, pady=5)
 
         # テキストクリアボタン
-        self.clear_button = tk.Button(self.frame, text="Clear Text", command=self.clear_text)
-        self.clear_button.grid(row=3, column=1, padx=5, pady=5)
+        self.clear_button = tk.Button(self.button_frame, text="Clear Text", command=self.clear_text)
+        self.clear_button.grid(row=0, column=2 + len(format_codes), padx=5, pady=5)
+
+        # テキストボックス
+        self.text_box = tk.Text(self.frame, wrap="word", height=20, width=50)
+        self.text_box.grid(row=1, column=0, columnspan=3, sticky="nsew", padx=5, pady=5)
 
         # グリッドの調整
-        self.frame.rowconfigure(0, weight=1)
+        self.frame.rowconfigure(1, weight=1)
         self.frame.columnconfigure(0, weight=1)
 
     def add_color_code(self):
@@ -66,15 +65,6 @@ class MinecraftCodeEditor:
     def add_format_code(self, code):
         """指定されたフォーマットコードをテキストボックスに追加"""
         self.text_box.insert(tk.END, code)
-
-    def validate_code(self):
-        """テキストボックスの内容をJSONとして検証する"""
-        content = self.text_box.get(1.0, tk.END).strip()
-        try:
-            json.loads(content)
-            messagebox.showinfo("Validation", "Valid JSON!")
-        except json.JSONDecodeError:
-            messagebox.showerror("Validation", "Invalid JSON format!")
 
     def clear_text(self):
         """テキストボックスの内容をクリアする"""
