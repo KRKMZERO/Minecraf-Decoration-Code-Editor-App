@@ -17,9 +17,9 @@ jobs:
         pip install pyinstaller
     - name: Build executable
       run: |
-        pyinstaller --onefile --icon=icon.ico MC-Dcode-app.py
+        pyinstaller --onefile --icon=icon.ico MC_Dcode_app.py
     - name: Upload executable
       uses: actions/upload-artifact@v3
       with:
         name: MC Dcode app
-        path: dist/MC-Dcode-app.exe
+        path: dist/MC_Dcode_app.exe
